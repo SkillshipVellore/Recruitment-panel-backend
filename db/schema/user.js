@@ -4,12 +4,12 @@ const validator = require('validator')
 
 var userSchema = new mongoose.Schema({
     
-    Name:
+    name:
     {
         type:String,
         required:true
     },
-    Email:
+    email:
     {
         type:String,
         required:true,
@@ -20,16 +20,16 @@ var userSchema = new mongoose.Schema({
             }
         }
     },
-    ContactNo:
+    contactNo:
     {
         type:Number,
         required:true
     },
-    Registration_Number:
+    registrationNumber:
     {
         type:String,
         required:true
     }
 });
 
-mongoose.model('user',userSchema); 
+export const UserModel = mongoose.model('user',userSchema); 

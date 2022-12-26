@@ -1,15 +1,36 @@
-require('./route/db')
+//dependencies
+import ConnectDB from "./db/conn";
+import cors from "cors";
+import helmet from 'helmet';
+import express from "express";
+require("dotenv").config();
 
-const express = require('express')
-const bodyparser = require('body-parser')
-const path = require('path')
+//config
+const app = express();
 
-const portalController = require('./controller/portalcontroller')
+app.use(express.json({limit: '50mb'}));
+app.use(express.urlencoded({extended: true, limit : '10mb'}));
+app.use(cors());
+app.use(helmet());
 
-var app = express();
 
-app.listen(1000,()=>{
-    console.log('server started at port :1000')
-});
+//routes
+import User from "./route/user";
 
-app.use('/', portalController)
+app.use("/user",User);
+
+
+//index api
+
+
+
+app.get("/",(req,res)=> res.json({message: "setup success !!"}));
+const PORT= process.env.PORT || 4000;
+
+
+app.listen(PORT,()=>
+    ConnectDB().then(()=> 
+ console.log("Server is up and running"))
+ .catch(()=>console.log("DB connection failed"))
+ );
+
